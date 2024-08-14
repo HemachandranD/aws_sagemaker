@@ -10,7 +10,7 @@ from sagemaker.workflow.parameters import ParameterString
 # Initialize SageMaker session and client
 sagemaker_session = sagemaker.Session()
 sm_client = boto3.client('sagemaker')
-role = 'YOUR_SAGEMAKER_EXECUTION_ROLE'  # Replace with your SageMaker execution role
+role = sagemaker.get_execution_role()  # Replace with your SageMaker execution role
 
 # Define input parameters
 input_data_uri = ParameterString(
@@ -42,7 +42,7 @@ preprocessing_step = ProcessingStep(
     processor=script_processor,
     inputs=[sagemaker.processing.ProcessingInput(source=input_data_uri, destination="/opt/ml/processing/input")],
     outputs=[sagemaker.processing.ProcessingOutput(output_name="processed_data", destination=output_data_uri, source="/opt/ml/processing/output")],
-    code="preprocessing.py"  # Replace with your preprocessing script
+    code="code/preprocessing.py"  # Replace with your preprocessing script
 )
 
 # Define the custom estimator for Prophet
@@ -51,6 +51,12 @@ prophet_estimator = sagemaker.estimator.Estimator(
     role=role,
     instance_count=1,
     instance_type="ml.m5.large",
+    entry_point='code/train.py',
+    script_mode=True,
+    hyperparameters={
+        'epochs': 2,
+        'batch-size': 256,
+    },
     output_path="s3://your-bucket/model-artifacts/"
 )
 
