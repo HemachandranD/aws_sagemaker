@@ -42,7 +42,7 @@ preprocessing_step = ProcessingStep(
     processor=script_processor,
     inputs=[sagemaker.processing.ProcessingInput(source=input_data_uri, destination="/opt/ml/processing/input")],
     outputs=[sagemaker.processing.ProcessingOutput(output_name="processed_data", destination=output_data_uri, source="/opt/ml/processing/output")],
-    code="code/preprocessing.py"  # Replace with your preprocessing script
+    code="code/preprocess.py"  # Replace with your preprocessing script
 )
 
 # Define the custom estimator for Prophet
