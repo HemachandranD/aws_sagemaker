@@ -31,3 +31,12 @@ predictions = json.loads(result)
 
 # Display the predictions
 print(predictions)
+
+# # Make future predictions
+# future = model.make_future_dataframe(periods=30)
+# forecast = model.predict(future)
+
+# # Save the forecast to CSV
+# forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].to_csv('forecast.csv', index=False)
+
+# print("Model trained and forecast saved as 'forecast.csv'")

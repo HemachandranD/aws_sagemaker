@@ -15,12 +15,12 @@ role = sagemaker.get_execution_role()  # Replace with your SageMaker execution r
 # Define input parameters
 input_data_uri = ParameterString(
     name="InputDataUri",
-    default_value="s3://your-bucket/input-data/"
+    default_value="s3://hemz-bucket/input-data/"
 )
 
 output_data_uri = ParameterString(
     name="OutputDataUri",
-    default_value="s3://your-bucket/output-data/"
+    default_value="s3://hemz-bucket/output-data/"
 )
 
 model_approval_status = ParameterString(
@@ -77,22 +77,22 @@ training_step = TrainingStep(
     }
 )
 
-# Define evaluation step (optional)
-evaluation_processor = ScriptProcessor(
-    image_uri="763104351884.dkr.ecr.us-west-2.amazonaws.com/forecasting-deep-forecasting:latest",  # Use a custom image with Prophet installed
-    command=["python3"],
-    role=role,
-    instance_count=1,
-    instance_type="ml.m5.large"
-)
+# # Define evaluation step (optional)
+# evaluation_processor = ScriptProcessor(
+#     image_uri="763104351884.dkr.ecr.us-west-2.amazonaws.com/forecasting-deep-forecasting:latest",  # Use a custom image with Prophet installed
+#     command=["python3"],
+#     role=role,
+#     instance_count=1,
+#     instance_type="ml.m5.large"
+# )
 
-evaluation_step = ProcessingStep(
-    name="EvaluateModel",
-    processor=evaluation_processor,
-    inputs=[sagemaker.processing.ProcessingInput(source=training_step.properties.ModelArtifacts.S3ModelArtifacts, destination="/opt/ml/processing/model")],
-    outputs=[sagemaker.processing.ProcessingOutput(output_name="evaluation", destination="s3://your-bucket/evaluation", source="/opt/ml/processing/evaluation")],
-    code="evaluate.py"  # Replace with your evaluation script
-)
+# evaluation_step = ProcessingStep(
+#     name="EvaluateModel",
+#     processor=evaluation_processor,
+#     inputs=[sagemaker.processing.ProcessingInput(source=training_step.properties.ModelArtifacts.S3ModelArtifacts, destination="/opt/ml/processing/model")],
+#     outputs=[sagemaker.processing.ProcessingOutput(output_name="evaluation", destination="s3://your-bucket/evaluation", source="/opt/ml/processing/evaluation")],
+#     code="evaluate.py"  # Replace with your evaluation script
+# )
 
 # Define model registration step
 model = prophet_estimator.create_model()
