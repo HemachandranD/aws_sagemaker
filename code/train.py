@@ -10,5 +10,5 @@ def train():
 
 if __name__ == "__main__":
     # Load preprocessed data
-    df = pd.read_csv('/opt/ml/processing/output/preprocessed_data.csv')
+    df = pd.read_csv('/opt/ml/processing/train/preprocessed_data.csv')
     train()
