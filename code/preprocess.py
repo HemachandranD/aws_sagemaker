@@ -11,4 +11,4 @@ if __name__ == "__main__":
 
     df = pd.read_csv(f"{base_dir}/input/synthetic_data.csv", header=None)
     processed_df = preprocess(df)
-    processed_df.to_csv(f"{base_dir}/output/preprocessed_data.csv", index=False)
+    processed_df.to_csv(f"{base_dir}/output/preprocessed/preprocessed_data.csv", index=False)
