@@ -11,4 +11,4 @@ ENV SAGEMAKER_PROGRAM preprocess.py
 ENV SAGEMAKER_PROGRAM train.py
 ENV PYTHONUNBUFFERED=TRUE
 
-ENTRYPOINT ["python3", "/opt/ml/code/train.py"]
+ENTRYPOINT ["python3"]
