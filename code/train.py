@@ -2,6 +2,7 @@ from prophet import Prophet
 import pandas as pd
 
 
+
 def train():
     # Initialize and fit Prophet model
     model = Prophet()
@@ -9,8 +10,8 @@ def train():
 
 
 if __name__ == "__main__":
-    # Load preprocessed data
-    base_dir = "/opt/ml/processing"
+    # The input data directory is typically stored in /opt/ml/input/data/<channel_name>
+    train_input_path = os.environ['SM_CHANNEL_TRAIN']
     
-    df = pd.read_csv(f"{base_dir}/output/train.csv")
+    df = pd.read_csv(f"{train_input_path}/train.csv")
     train()
