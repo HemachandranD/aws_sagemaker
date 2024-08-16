@@ -1,13 +1,14 @@
 
 FROM python:3.9-slim-buster
 
-RUN pip install pandas==2.2.2 scikit-learn==1.4.2 prophet==1.1.5
-
+COPY requirements.txt /opt/ml/requirements.txt
 COPY code/preprocess.py /opt/ml/code/preprocess.py
 COPY code/train.py /opt/ml/code/train.py
+
+RUN pip3 install -r /opt/ml/requirements.txt
 
 ENV SAGEMAKER_PROGRAM preprocess.py
 ENV SAGEMAKER_PROGRAM train.py
 ENV PYTHONUNBUFFERED=TRUE
 
-ENTRYPOINT ["python3"]
+ENTRYPOINT ["python3", "/opt/ml/code/train.py"]
