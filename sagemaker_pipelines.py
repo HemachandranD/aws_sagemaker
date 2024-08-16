@@ -37,13 +37,21 @@ script_processor = ScriptProcessor(
     instance_type="ml.m5.large"
 )
 
-preprocessing_step = ProcessingStep(
-    name="PreprocessData",
-    processor=script_processor,
+# preprocessing_step = ProcessingStep(
+#     name="PreprocessData",
+#     processor=script_processor,
+#     inputs=[sagemaker.processing.ProcessingInput(source=input_data_uri, destination="/opt/ml/processing/input")],
+#     outputs=[sagemaker.processing.ProcessingOutput(output_name="processed_data", destination=output_data_uri, source="/opt/ml/processing/output")],
+#     code="code/preprocess.py"  # Replace with your preprocessing script
+# )
+
+preprocessing_step = script_processor.run(
     inputs=[sagemaker.processing.ProcessingInput(source=input_data_uri, destination="/opt/ml/processing/input")],
     outputs=[sagemaker.processing.ProcessingOutput(output_name="processed_data", destination=output_data_uri, source="/opt/ml/processing/output")],
     code="code/preprocess.py"  # Replace with your preprocessing script
 )
+
+preprocessing_step= ProcessingStep(name="PreprocessData", step_args=preprocessing_step)
 
 # Define the custom estimator for Prophet
 prophet_estimator = sagemaker.estimator.Estimator(
