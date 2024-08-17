@@ -1,7 +1,5 @@
 from prophet import Prophet
 import pandas as pd
-import os
-
 
 
 def train():
@@ -11,8 +9,6 @@ def train():
 
 
 if __name__ == "__main__":
-    # The input data directory is typically stored in /opt/ml/input/data/<channel_name>
-    train_input_path = os.environ['SM_CHANNEL_TRAIN']
-
-    df = pd.read_csv(f"{train_input_path}/train.csv")
+    train_data_path = "/opt/ml/input/data/train"  # Adjust the filename if necessary
+    df = pd.read_csv(f"{train_data_path}/train.csv")
     train()
