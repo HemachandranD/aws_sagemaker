@@ -6,6 +6,9 @@ def train():
     # Initialize and fit Prophet model
     model = Prophet()
     model.fit(df)
+    # Save the model to the /opt/ml/model/ directory
+    model_path = os.path.join("/opt/ml/model", "prophet_model.pkl")
+    model.save(model_path)
 
 
 if __name__ == "__main__":
