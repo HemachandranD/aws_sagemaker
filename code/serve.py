@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import pandas as pd
 import pickle
 import os
+import json
 
 app = Flask(__name__)
 
@@ -20,7 +21,7 @@ def ping():
 def predict():
     # Load JSON data from request and convert to DataFrame
     input_json = request.get_json()
-    data = pd.DataFrame(input_json)
+    data = pd.DataFrame(json.loads(input_json))
 
     # Forecast
     forecast = model.predict(data[['ds']])
