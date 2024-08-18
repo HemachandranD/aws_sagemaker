@@ -1,7 +1,8 @@
-from prophet import Prophet
-import pandas as pd
 import os
 import pickle
+
+import pandas as pd
+from prophet import Prophet
 
 
 def train(df):
@@ -17,5 +18,5 @@ if __name__ == "__main__":
     model = train(df)
     # Save the model to the /opt/ml/model/ directory
     model_path = os.path.join("/opt/ml/model", "prophet_model.pkl")
-    with open(model_path, 'wb') as f:
+    with open(model_path, "wb") as f:
         pickle.dump(model, f)
