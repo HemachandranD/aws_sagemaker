@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 
 # Load the model
-model_path = os.path.join('/opt/ml/model', 'model.pkl')
+model_path = os.path.join('/opt/ml/model', 'prophet_model.pkl')
 with open(model_path, 'rb') as f:
     model = pickle.load(f)
 
@@ -18,12 +18,9 @@ def ping():
 
 @app.route('/invocations', methods=['POST'])
 def predict():
-    # Read CSV data from request
-    csv_data = request.data.decode('utf-8')
-    data = pd.read_csv(pd.compat.StringIO(csv_data))
-
-    # Prepare data for Prophet
-    data.rename(columns={'date': 'ds', 'value': 'y'}, inplace=True)
+    # Load JSON data from request and convert to DataFrame
+    input_json = request.get_json()
+    data = pd.DataFrame(input_json)
 
     # Forecast
     forecast = model.predict(data[['ds']])
