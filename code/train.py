@@ -8,7 +8,6 @@ def train():
     # Initialize and fit Prophet model
     model = Prophet()
     model.fit(df)
-    
     return model
 
 
