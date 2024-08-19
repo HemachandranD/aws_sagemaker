@@ -6,7 +6,7 @@ import pandas as pd
 
 client = boto3.client("sagemaker-runtime")
 
-df = pd.read_csv("synthetic_data.csv")
+df = pd.read_csv("realtime_data.csv")
 # Convert DataFrame to a list of dictionaries
 realtime_data = df.iloc[:2, :].to_dict(orient="records")
 
@@ -26,6 +26,6 @@ cleaned_response = response.replace('\\"', '"').strip('"\n')
 # %%
 # Convert to DataFrame
 prediction_df = pd.DataFrame(json.loads(cleaned_response))
-prediction_df
+print(prediction_df)
 
 # %%
